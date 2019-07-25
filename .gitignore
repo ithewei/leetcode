@@ -1,0 +1,11 @@
+# cache
+~
+.bak
+
+# IDE
+tags
+cscope*
+.ycm*
+
+# output
+bin
