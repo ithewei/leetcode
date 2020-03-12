@@ -25,29 +25,28 @@ struct ListNode {
 struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
     struct ListNode* p1 = l1;
     struct ListNode* p2 = l2;
-    struct ListNode* head = NULL;
-    struct ListNode* prev = NULL;
-    struct ListNode* back = NULL;
+    struct ListNode dummy = {0, NULL};
+    struct ListNode* tail = &dummy;
     int carry = 0;
+    int sum;
     while (p1 || p2 || carry) {
-        back = (struct ListNode*)malloc(sizeof(struct ListNode));
-        back->val = carry;
-        back->next = NULL;
+        struct ListNode* node = (struct ListNode*)malloc(sizeof(struct ListNode));
+        sum = carry;
         if (p1) {
-            back->val += p1->val;
+            sum += p1->val;
             p1 = p1->next;
         }
         if (p2) {
-            back->val += p2->val;
+            sum += p2->val;
             p2 = p2->next;
         }
-        carry = back->val / 10;
-        back->val %= 10;
-        if (!head)      head = back;
-        if (prev)       prev->next = back;
-        prev = back;
+        carry = sum / 10;
+        node->val = sum % 10;
+        node->next = NULL;
+        tail->next = node;
+        tail = node;
     }
-    return head;
+    return dummy.next;
 }
 
 void freeListNode(struct ListNode* l) {
@@ -75,24 +74,12 @@ void printListNode(struct ListNode* l) {
 }
 
 int main() {
-    struct ListNode la_1;
-    struct ListNode la_2;
-    struct ListNode la_3;
-    la_1.next = &la_2;
-    la_2.next = &la_3;
-    la_3.next = NULL;
-    la_1.val = 2;
-    la_2.val = 4;
-    la_3.val = 3;
-    struct ListNode lb_1;
-    struct ListNode lb_2;
-    struct ListNode lb_3;
-    lb_1.next = &lb_2;
-    lb_2.next = &lb_3;
-    lb_3.next = NULL;
-    lb_1.val = 5;
-    lb_2.val = 6;
-    lb_3.val = 4;
+    struct ListNode la_3 = {3, NULL};
+    struct ListNode la_2 = {4, &la_3};
+    struct ListNode la_1 = {2, &la_2};
+    struct ListNode lb_3 = {4, NULL};
+    struct ListNode lb_2 = {6, &lb_3};
+    struct ListNode lb_1 = {5, &lb_2};
 
     struct ListNode* result = addTwoNumbers(&la_1, &lb_1);
     printListNode(result);
