@@ -13,13 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/*
- * Definition for singly-linked list.
- */
-struct ListNode {
-    int val;
-    struct ListNode* next;
-};
+#include "../common/ListNode.h"
 
 // result should be freed by call freeListNode
 struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
@@ -49,30 +43,6 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
     return dummy.next;
 }
 
-void freeListNode(struct ListNode* l) {
-    struct ListNode* prev = NULL;
-    struct ListNode* next = l;
-    while (next) {
-        prev = next;
-        next = next->next;
-        free(prev);
-    }
-}
-
-void printListNode(struct ListNode* l) {
-    struct ListNode* next = l;
-    while (next) {
-        if (next == l) {
-            printf("%d", next->val);
-        }
-        else {
-            printf(" -> %d", next->val);
-        }
-        next = next->next;
-    }
-    printf("\n");
-}
-
 int main() {
     struct ListNode la_3 = {3, NULL};
     struct ListNode la_2 = {4, &la_3};
@@ -82,7 +52,7 @@ int main() {
     struct ListNode lb_1 = {5, &lb_2};
 
     struct ListNode* result = addTwoNumbers(&la_1, &lb_1);
-    printListNode(result);
-    freeListNode(result);
+    printList(result);
+    freeList(result);
     return 0;
 }
